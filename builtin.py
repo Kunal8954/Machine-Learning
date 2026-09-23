@@ -1,4 +1,5 @@
 from sklearn.datasets import load_diabetes
+from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 
 data = load_diabetes()
@@ -6,7 +7,16 @@ data = load_diabetes()
 X = data.data
 y = data.target
 
-model = LinearRegression()
-model.fit(X, y)
+# Split
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
 
-print(model.predict([X[0]]))
+# Train
+model = LinearRegression()
+model.fit(X_train, y_train)
+
+# Predict on unseen test data
+y_pred = model.predict(X_test)
+
+print(y_pred)
